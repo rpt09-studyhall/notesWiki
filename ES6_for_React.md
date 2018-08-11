@@ -54,7 +54,7 @@ const nameLengths = names.map( name => name.length );
 
 The [`.map()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) method returns a new array, it does not modify the original array.
 
-```
+```javascript
 // For musicData, return a string for each item in the array
 // as: <album> by <artist> sold <sales> copies
 
@@ -88,14 +88,14 @@ JavaScript's [`Array.filter()`](https://developer.mozilla.org/en-US/docs/Web/Jav
 
 The difference is that the function passed to `.filter()` is used as a test, and only items in the array that pass the test are included in the new array.
 
-```
+```javascript
 const names = ['Joe', 'Leslie', 'Magee'];
 const shortNames = names.filter( name => name.length < 5 );
 ```
 
 Example: filter the `musicData` array to return only album names between 10 and 25 characters:
 
-```
+```javascript
 musicData.filter( obj => 10 <= obj.name.length <= 25 );
 ```
 
@@ -107,7 +107,7 @@ What makes `.map()` and `.filter()` cool is that they can be combined. Because b
 
 We'll want to run things in the order `.filter()` first and then `.map()`. Because `.map()` runs the function once for each item in the array, it will be faster if the array were already filtered (smaller).
 
-```
+```javascript
 musicData.filter( album => album.sales > 1000000 ).map( album => album.artist + ' is a great performer' );
 ```
 
@@ -121,7 +121,7 @@ Recall that `.map()` and `.filter()` are also higher-order functions. Both funct
 
 To see how powerful `.reduce()` can be, consider the following `iceCreamStats` array, showing the number of gallons of ice cream each team member has eaten.
 
-```
+```javascript
 const iceCreamStats = [
   {
     name: 'Chris',
@@ -144,7 +144,7 @@ const iceCreamStats = [
 
 For the total amount of ice cream eaten, we could add up the totals ourselves, or reduce this data down to just a single number, and that's exactly what the `.reduce()` method does.
 
-```
+```javascript
 iceCreamStats.reduce( (accumulator, currentValue) => {
   return accumulator + currentValue.gallonsEaten;
 }, 0);
@@ -154,7 +154,7 @@ iceCreamStats.reduce( (accumulator, currentValue) => {
 
 Tunes example:
 
-```
+```javascript
 const musicData = [
     { artist: 'Adele', name: '25', sales: 1731000 },
     { artist: 'Drake', name: 'Views', sales: 1608000 },
@@ -168,7 +168,7 @@ const musicData = [
 
 Just Reduce:
 
-```
+```javascript
 const totalAlbumSales = musicData.reduce( (accumulator, currentValue) => {
     return accumulator + currentValue.sales;
 }, 0);
@@ -176,7 +176,7 @@ const totalAlbumSales = musicData.reduce( (accumulator, currentValue) => {
 
 Filter & Reduce:
 
-```
+```javascript
 const totalAlbumSales = musicData.filter(ea => ea.artist.length + ea.name.length < 25).reduce( (accumulator, currentValue) => {
     return accumulator + currentValue.sales;
 }, 0);
@@ -214,7 +214,7 @@ Since `const` is the strictest way to declare a variable, we may want to just al
 
 Also called "template strings". **Template literals** are essentially string literals that include embedded expressions. Denoted with `backticks` instead of single quotes ( `''` ) or double quotes ( `""` ), template literals can contain placeholders that are represented using `${expression}`. This makes it much easier to build strings.
 
-```    
+```javascript    
 const student = {
   name: 'Mr. Wolf',
   guardian: 'Mr. Pink'
@@ -240,7 +240,7 @@ In ES6, we can extract data from arrays and objects into distinct variables usin
 
 Allows us to specify the elements we want to extract from an array or object _on the left side of an assignment_.
 
-```
+```javascript
 const point = [10, 25, -34];
 const [x, y, z] = point;
 console.log(x, y, z);  // 10 25 -34
@@ -250,7 +250,7 @@ In this example, the brackets `[ ]` represent the array being destructured and `
 
 We can ignore values when restructuring arrays `const [x, , z] = point;` ignores the `y` coordinate and discards it.
 
-```
+```javascript
 const gemstone = {
   type: 'quartz',
   color: 'rose',
@@ -267,7 +267,7 @@ We can also specify the values we want to select when destructuring an object. F
 
 When adding object properties with the same name as variable names being assigned to them:
 
-```
+```javascript
 let type = 'quartz';
 let color = 'rose';
 let carat = 21.29;
@@ -286,7 +286,7 @@ console.log(gemstone);
 ```
 Shorthand to add methods to objects.
 
-```
+```javascript
 let type = 'quartz';
 let color = 'rose';
 let carat = 21.29;
@@ -301,7 +301,7 @@ const gemstone = {
 };
 ```
 Since we only need to reference the gemstone's `calculateWorth` property in order to call the function, having the function keyword is redundant, so it can be dropped.
-```
+```javascript
 let gemstone = {
   type,
   color,
@@ -313,7 +313,8 @@ let gemstone = {
 ### Iteration
 
 The **for ...of** loop combines parts of the **for** and **for ...in** loops and iterates over data types that follow the [iterable protocol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols). By default this includes the data types String, Array, Map, and Set. Objects are not iterable by default.
-```
+
+```javascript
 // for...in loop:
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -325,7 +326,7 @@ The **forEach loop** is another type of for loop in JavaScript. However, `forEac
 
 The **for...of** loop is used to loop over any type of data that is _iterable_.
 
-```
+```javascript
 // for...of loop
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -339,7 +340,7 @@ It's good practice to use plural names for objects that are collections of value
 
 We can stop or break a for...of loop at anytime.
 
-```
+```javascript
 const digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 for (const digit of digits) {
@@ -353,7 +354,8 @@ for (const digit of digits) {
 ### Spread syntax
 
 The **spread operator**, written with three consecutive dots ( `...` ), is [new in ES6](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) and gives us the ability to expand, or _spread_, [iterable objects](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators#Iterators) into multiple elements.
-```
+
+```javascript
 const books = ["Don Quixote", "The Hobbit", "Alice in Wonderland", "Tale of Two Cities"];
 console.log(...books);
 
@@ -371,7 +373,7 @@ let newPlayer = {...player, score: 2};
 
 One example of when the spread operator can be useful is when combining arrays. If we needed to combine multiple arrays in the old days before the spread operator, we were forced to use the Array's `concat()` method.
 
-```
+```javascript
 // old (1975) way:
 const fruits = ["apples", "bananas", "pears"];
 const vegetables = ["corn", "potatoes", "carrots"];
@@ -393,7 +395,8 @@ const produce = [...fruits, ...vegetables]
 Spread operator _spreads_ an array into multiple elements, the _rest parameter_ bundles multiple elements into an array.
 
 The **rest parameter**, also written with three consecutive dots ( `...` ), allows us to represent an indefinite number of elements as an array. Like when assigning the values of an array to variables:
-```
+
+```javascript
 const order = [20.17, 18.67, 1.50, "cheese", "eggs", "milk", "bread"];
 const [total, subtotal, tax, ...items] = order;
 console.log(total, subtotal, tax, items);
@@ -406,7 +409,8 @@ Using the rest parameter, `items` is assigned the "rest of the values" in the ar
 Another use case for the rest parameter [(spread syntax)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) is when we're working with variadic functions. Variadic functions are functions that take an indefinite number of arguments.
 
 A `sum()` function that accepts any number of arguments:
-```
+
+```javascript
 function sum(...nums) {
   let total = 0;  
   for(const num of nums) {
@@ -433,7 +437,7 @@ Arrow functions, class keyword, and default parameters.
 
 #### Arrow functions
 
-```
+```javascript
 // old way: convert names to uppercase
 const upperizedNames = ['fudge', 'ice cream', 'licorice'].map(function(name) { 
   return name.toUpperCase();
@@ -446,7 +450,7 @@ const upperizedNames = ['fudge', 'ice cream', 'licorice'].map(
 ```
 The parameter list appears before the arrow function's arrow. With only **one** parameter in the list, we can skip the parentheses around it. If there are **two or more** items in the parameter list, or **zero**, we need to wrap the list in parentheses:
 
-```
+```javascript
 // empty parameter list requires parentheses
 const sayHi = () => console.log('Hello World!');
 sayHi();
@@ -461,7 +465,7 @@ orderIceCream('chocolate', 'waffle');
 
 Concise - With single expression as the function body:
 
-```
+```javascript
 const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(
   name => name.toUpperCase()
 );
@@ -472,7 +476,7 @@ const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map(
 
 Body block syntax: when we need more than one line of code:
 
-```
+```javascript
 const upperizedNames = ['Farrin', 'Kagure', 'Asser'].map( name => {
   name = name.toUpperCase();
   return `${name} has ${name.length} characters in their name`;
@@ -508,7 +512,7 @@ With regular functions, the value of `this` is set based on how the _function is
 
 #### Default function parameters
 
-```
+```javascript
 function greet(name = 'Student', greeting = 'Welcome') {
   return `${greeting} ${name}!`;
 }
@@ -523,7 +527,7 @@ To create a default parameter, add an equal sign ( `=` ) and then whatever we wa
 #### Defaults and destructuring arrays
 
 We can combine default function parameters [with destructuring](https://davidwalsh.name/destructuring-function-arguments) to create powerful functions.
-```
+```javascript
 function createGrid([width = 5, height = 5] = []) {
   return `Generates a ${width} x ${height} grid`;
 }
@@ -540,7 +544,7 @@ If no argument is passed when `createGrid()` is called, it will use the `=[]` de
 
 Just like array destructuring with array defaults, a function can have an object be a default parameter and use object destructuring:
 
-```
+```javascript
 function createSundae({scoops = 1, toppings = ['Hot Fudge']} = {}) {
   const scoopText = scoops === 1 ? 'scoop' : 'scoops';
   return `Your sundae has ${scoops} ${scoopText} with ${toppings.join(' and ')} toppings.`;
@@ -553,7 +557,7 @@ createSundae({toppings: ['Cookie Dough']}); // Your sundae has 1 scoop with Cook
 ```
 To use a default value for the first property, but change the next, just pass an object with the property we want to change:
 
-```
+```javascript
 function createSundae({scoops = 1, toppings = ['Hot Fudge']} = {}) { ... }
 
 createSundae({toppings: ['Hot Fudge', 'Sprinkles', 'Caramel']});
@@ -567,7 +571,7 @@ function buildHouse({floors = 1, color = 'red', walls = 'brick'} = {}) {
 
 JavaScript is not a class-based language, it uses functions to create objects, and links objects together by prototypal inheritance. JavaScript classes are just a Jedi mind-trick over regular functions and prototypal inheritance.
 
-```
+```javascript
 class Plane {
   constructor(numEngines) {
     this.numEngines = numEngines;
@@ -603,7 +607,7 @@ Benefits of classes
 3. Using classes requires the use of `new`
     * When creating a new instance of a JavaScript class, the `new` keyword must be used
 
-    ```
+    ```javascript
     class Toy {
        ...
     }
@@ -623,14 +627,14 @@ A "Set" is a new built-in object in ES6 that behaves like a mathematical set & w
 
 #### Create a Set
 
-```
+```javascript
 const games = new Set();
 console.log(games);
 ```
 
 To create a Set from a list of values, use an array:
 
-```
+```javascript
 const games = new Set(['Super Mario Bros.', 'Banjo-Kazooie', 'Mario Kart', 'Super Mario Bros.']);
 console.log(games);
 
@@ -668,14 +672,18 @@ Sets are built-in iterables. That means:
 
 Because the `.values()` method returns a new iterator object (called `SetIterator`), we can store that iterator object in a variable and loop through each item in the Set using `.next()`.
 
-    const iterator months.values();
-    iterator.next();
-    // Object {value: 'January', done: false}
+```javascript
+const iterator months.values();
+iterator.next();
+// Object {value: 'January', done: false}
+```
 
 If we run `.next()` again:
 
-    iterator.next();
-    // Object {value: 'February', done: false}
+```javascript
+  iterator.next();
+  // Object {value: 'February', done: false}
+```
 
 And so on until `done` equals `true` that marks the end of the Set.
 
@@ -694,7 +702,7 @@ The new way to handle async requests. "Do this thing now, then notify me when it
 
 A JavaScript Promise is created with the new [Promise constructor function](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) - `new Promise()`. A promise will let us start some work that will be done **asynchronously** and let us get back to our regular work. When we create the promise, we give it the code that will be run asynchronously. We provide this code as the argument of the constructor function:
 
-```
+```javascript
 new Promise(function () {
   window.setTimeout(function createSundae(flavor = 'chocolate') {
     const sundae = {};
@@ -714,7 +722,7 @@ But once that's all done, how does JavaScript notify us that it's finished and r
 
 The function gets passed to the function we provide the Promise constructor - typically the word "resolve" is used to indicate that this function should be called when the request completes successfully. Notice the `resolve` on the first line:
 
-```
+```javascript
 new Promise(function (resolve, reject) {
     window.setTimeout(function createSundae(flavor = 'chocolate') {
         const sundae = {};
@@ -731,7 +739,7 @@ Now when the sundae has been successfully created, it calls the `resolve` method
 
 If there is a problem with the request and it couldn't be completed, then we could use the second function that's passed to the function. Typically, this function is stored in an identifier called "reject" to indicate that this function should be used if the request fails for some reason. Note the `reject` on the first line:
 
-```
+```javascript
 new Promise(function (resolve, reject) {
   window.setTimeout(function createSundae(flavor = 'chocolate') {
     const sundae = {};
@@ -755,7 +763,7 @@ A Promise constructor takes a function that will run and then, after some amount
 
 The first thing to understand is that a Promise will immediately return an object.
 
-```
+```javascript
 const myPromiseObj = new Promise(function (resolve, reject) {
     // sundae creation code
 });
@@ -766,7 +774,7 @@ That object has a `.then()` method on it that we can use to have it notify us if
 1. the function to run if the request completed successfully
 2. the function to run if the request failed to complete
 
-```
+```javascript
 mySundae.then(function(sundae) {
     console.log(`Time to eat my delicious ${sundae}`);
 }, function(msg) {
