@@ -14,7 +14,7 @@ Table of Contents
   - [Edit package.json scripts](#package-json-scripts)  
   - [Add a boilerplate React App](#simple-react-app)
   - [Build bundle via webpack / webpack-dev-server hot reloading](#run-webpack)
-  - [Deployment](#deployment) *Coming soon*
+  - [Deployment / Better file setup / working with css + html files](#deployment)
 
 <a id="react-with-babel-browser"></a>
 
@@ -280,7 +280,10 @@ MYPROJ/
 So now we're ready to setup our package.json. There's probably more in there than just `scripts`..but this is the config option we're concerned with. We're gonna add two scripts, rename them what you like:
 
   - `build`: something to build our `webpack` bundle once, mainly used for deployment
+  - `buildWatch`: this is an alternative to `devServer` (see next description)..perhaps you want to use another browser refresh server like `live-server --wait=500`, so this would skip browser refresh, but still  watches for file changes 
   - `devServer`: this will be our dev server using `webpack-dev-server` that watches for file changes and refreshes our browser after a new compile. 
+
+
 
 Makes sense right? See below. Woop ok now we can start writing app goodness.
 
@@ -290,6 +293,7 @@ Makes sense right? See below. Woop ok now we can start writing app goodness.
   // ...
   "scripts": {
      "build":  "webpack -d --config ./webpack.config.js --mode production",
+     "buildWatch": "webpack -d --watch --config ./webpack.config.js --mode development",
      "devServer": "webpack-dev-server --config ./webpack.config.js --mode development"
    },
   // ...
@@ -383,6 +387,106 @@ Alright you're all ready to go :)
 
 <a id='deployment'></a>
 
-Deployment
+Deployment (might fold this into how I start all projects)
 -------------
-Todo: -moving html / css pages into dist?
+
+
+
+Ok so we are bundling our javascript files (+ possibly css if you did those optional stuff). Lets move our html/image files over to dist as well.. we'll do this with `file-loader` + bundle css files if not doing so already with  `css-loader `. 
+
+In fact! Lets refactor our file structure so that we can deploy all our files from `dist` folder and keep all our working files in `src` file. 
+
+``` sh
+# source folder (reactor yours !)
+src
+├── css
+│   └── style.css
+├── index.html
+└── js
+    ├── components
+    │   └── App.js
+    └── index.js
+
+# dist folder 
+dist/
+├── index.html
+└── js
+    └── app.bundle.js
+
+```
+
+We'll install any loaders we dont have already!
+
+``` sh
+# css loader if you don't have
+$> npm install --save-dev style-loader css-loader
+# file loader for html 
+$> npm install --save-dev file-loader
+```
+
+Now in webpack we'll add the file loader config and css if you don't have it yet.
+Note the addition of `css-loader` and `file-loader`. We include some options for copying the `[name]` and `[ext]` extension for naming and to put the index.html to the parent of our entry file (so the root of dist!)
+
+
+
+### webpack.config.js (refactor!)
+```
+const webpack = require("webpack");
+
+module.exports = {
+  entry: [
+    './src/js/index.js'
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader']
+      },
+      {
+        test: /\.(html)$/,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]',
+          outputPath: '../'
+        }
+      }
+    , {
+        test: /\.css$/,
+        use: [ 'style-loader', 'css-loader' ]
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx']
+  },
+  output: {
+    path: __dirname + '/dist/js',
+    publicPath: '/dist/js',
+    filename: 'app.bundle.js'
+  },
+  devServer: {
+    contentBase: './',
+    port: 3000
+  }
+};
+```
+
+### importing html/css/html 
+
+Usage of file/css loader example below. You simply import to tell bundler to copy/bundle those files over. No need of using these variable necessary. Note: file loader would be used similarly for image files and other assets
+
+index.js
+``` js
+// to include copying html over do such like so
+import html from '../index.html';
+//  for css files (which will be included in bundle.js file)
+import css from '../css/style.css';
+```
+
+Fullstack hotloading
+----------
+
+Nodemon + a hot browser refresh option? how can we do that? TODO!!
+
