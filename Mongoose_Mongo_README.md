@@ -1,15 +1,26 @@
 MongoDB + Mongoose Notes 
 =========================
 
-Ok so the first thing is to make sure you have mongo instlled and the server is running.
-TO check type in your command terminal the following:
+Ok so the first thing is to make sure you have mongo installed and the server is running. Then we'll go into
+detail on mongose use
+
+Table of Contents
+----
+- MongoDB
+  - [Install](#instal-mongo-if-not-already-installed)
+  - [Check if Running](#check-if-mongo-is-running)
+  - [Mongo REPL (cli)](#open-mongo-repl)
+- Mongoose
+  - [Set up connection](#set-uo-connection)
+  - [Schema](#schema)
+  - [Typical CRUD Operations](#typical-crud-operations)
 
 
 Mongo cli setup
 ----------------
 First things first lets get mongo setup for cli use.
 
-## instal mongo if not already installed
+## install mongo if not already installed
 
 If not already installed do so by running the following. Make sure you have `homebbrew` installed.
 
@@ -66,7 +77,7 @@ Now we'll just need to install a few things `mongoose` and `bluebird`.
 $> npm install --save bluebird mongoose
 ```
 
-## in db.js
+## Set up connection
 
 First thing we're gonna do is setup main setup and connect
 
@@ -86,7 +97,7 @@ const willConnect = mongoose.connect(mongoURI, {useMongoClient: true});
 ...
 ```
 
-## in db.js (cont.)
+## Schema
 
 Now we're going to setup a schema
 
