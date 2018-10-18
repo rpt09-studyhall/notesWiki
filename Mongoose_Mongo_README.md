@@ -11,7 +11,7 @@ Table of Contents
   - [Check if Running](#check-if-mongo-is-running)
   - [Mongo REPL (cli)](#open-mongo-repl)
 - Mongoose
-  - [Set up connection](#set-uo-connection)
+  - [Set up connection](#set-up-connection)
   - [Schema](#schema)
   - [Typical CRUD Operations](#typical-crud-operations)
 
