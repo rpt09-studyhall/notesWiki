@@ -17,6 +17,8 @@ brew install mysql@5.7
 
 ## Windows (installing 5.7)
 
+Follow these steps for a fresh install    
+
 1) Install mysql 5.7 server, remember password (at the end it will ask you to name service `MySQL57`)
 2) Run windows + r, run 'services.msc' and scroll down to `MySQL57` or whatever you named it
 3) Right click > run, if not running..
@@ -24,3 +26,7 @@ brew install mysql@5.7
 5) Restart console, try `mysql -uroot` and password if supplied
 6) You might have to initialize the db folder..do so by `mysqld --console --initialize-insecure` in a admin ready console.
 7) now try `mysql -uroot` and password if supplied
+
+Note: For importing sql in powershell the `<` caret cannot be used. You will get an error, so to get around use:
+
+`$> cmd /c "mysql -uroot -ppassword < setupFriends.sql"`
