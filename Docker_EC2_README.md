@@ -1,6 +1,3 @@
-
-
-
 # Docker / EC2 Notes
 
   - [Docker / EC2 Notes](#docker--ec2-notes)
@@ -23,6 +20,7 @@
     - [Advanced Dockerfile (with postgresql!)](#advanced-dockerfile-with-postgresql)
       - [installing more npm stuff](#installing-more-npm-stuff)
       - [editing our Dockerfile , node index, and supplying a schema.sql file for seeding!](#editing-our-dockerfile--node-index-and-supplying-a-schemasql-file-for-seeding)
+      - [Build + RUN](#build--run)
       - [Voila it works!](#voila-it-works)
 
 ## About
@@ -413,7 +411,15 @@ CMD /etc/init.d/postgresql start \
 && node index.js
 
 ```
+### Build + RUN
 
+Same process as before! This time we're going to map two ports to the ec2 instance, you do this simply by specifying another `-p` flag.
+``` sh
+# build image (remember to copy files over, and make sure you have a .env on your ec2)
+$> docker build --rm -t hello-world .
+# run and map our web application and psql (however if you're not needing to ping it from outside container , no need to map the psql port)
+$>  docker run -i -p 80:80 -p 5432:5432  hello-world
+```
 ### Voila it works!
 
 ![it works once more!](https://i.imgur.com/cFcgEKH.png)
