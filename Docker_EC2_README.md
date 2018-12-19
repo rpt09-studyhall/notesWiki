@@ -258,11 +258,16 @@ Unfortunately `Ctrl+c` or `exit` wont work. Ok so now we want to kill our docker
   - wait...
   - it should be killed and now you can return to your other tab :D
 
-## Shelling / excuting into your docker container
+## Shelling / executing into your docker container
 
-A really handy way to build out your Dockerfile, might be to make a super simple runtime env, then shell in and test your commands. You can do so by doing `docker exec [flags] [container_id] [command]`
+A really handy way to build out your Dockerfile, might be to make a super simple runtime env, then shell in and test your commands. You can do so by doing `docker exec [flags] [container_id] [command]`. Well if you want to have a persitent shell you can use the `-it` flag where `i` is see the terminal output and `-t` is for `teletype mocking` to mimic live interaction.
 
-
+``` sh
+# show running images (this will tell you the container id)
+$> docker ps
+# now we have our container id place it and execute!
+$> docker exec -it <container_id> bash
+```
 ## Advanced Dockerfile (with postgresql!)
 
 So now I will go over a slightly more complex `Dockerfile` which will run both `node` and `postgresql` in one image/container. First let see our files on file system. Im going to highlight the new files with a `*`.
