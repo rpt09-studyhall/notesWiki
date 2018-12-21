@@ -17,6 +17,7 @@
     - [Open up your port on ec2!](#open-up-your-port-on-ec2)
     - [Killing a running docker container](#killing-a-running-docker-container)
     - [Shelling / excuting into your docker container](#shelling--excuting-into-your-docker-container)
+    - [Cleaning up old docker images](#cleaning-up-old-docker-images)
     - [Advanced Dockerfile (with postgresql!)](#advanced-dockerfile-with-postgresql)
       - [installing more npm stuff](#installing-more-npm-stuff)
       - [editing our Dockerfile , node index, and supplying a schema.sql file for seeding!](#editing-our-dockerfile--node-index-and-supplying-a-schemasql-file-for-seeding)
@@ -277,6 +278,7 @@ Often you might have some loose docker images that take up a good chunk of memor
 
 ``` sh
 $> docker system prune
+```
 
 ## Advanced Dockerfile (with postgresql!)
 
