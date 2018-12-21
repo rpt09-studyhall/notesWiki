@@ -51,7 +51,8 @@ matically be created as `ec2-user`
 # move it to shell folder.
 $>  cd path/to/downloaded/pem
 $> mv mine.pem ~/.ssh
-$> chmod 400 mine.pem
+# give it lower privelages (required by ssh)
+$> chmod 400 ~/.ssh/mine.pem
 # great! now you can ssh into your instance by specifing pem key
 $>  ssh -i "~/.ssh/mine.pem" ec2-user@ec2-54-172-80-40.compute-1.amazonaws.com
 # expected result should be something like below
@@ -151,9 +152,10 @@ We're then running our index.js file and exposing it on port 80! Note: Exposing 
 FROM node:8.9.4
 # copy files from current folder to container folder
 COPY . .
-
-# node start up
+# install npm under production env so dev dependencies dont get installed
+ENV NODE_ENV=production
 RUN npm install
+# node start up
 CMD node index.js
 EXPOSE 80
 ```
@@ -268,6 +270,14 @@ $> docker ps
 # now we have our container id place it and execute!
 $> docker exec -it <container_id> bash
 ```
+
+## Cleaning up old docker images 
+
+Often you might have some loose docker images that take up a good chunk of memory. Use the following command to clean up your docker and remove any loose ones. I personally got a `ran out of space` because I had ran out of inodes (this was actually due to installing all my dev dependencies as well, but anyhoo)..a good thing to do is:
+
+``` sh
+$> docker system prune
+
 ## Advanced Dockerfile (with postgresql!)
 
 So now I will go over a slightly more complex `Dockerfile` which will run both `node` and `postgresql` in one image/container. First let see our files on file system. Im going to highlight the new files with a `*`.
@@ -404,7 +414,8 @@ WORKDIR app
 RUN apt-get update \
   && apt-get install -y postgresql postgresql-contrib \
   && apt-get install sudo
-# install npm
+# install npm under production env so dev dependencies dont get installed
+ENV NODE_ENV=production
 RUN npm install
 #expose pg + node
 EXPOSE 80 5432
